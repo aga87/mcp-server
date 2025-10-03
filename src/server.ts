@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { registerTool } from "./lib";
-import { additionTool } from "./tools";
+import { additionTool, cartItemsRetrievalTool } from "./tools";
 
 // Create an MCP server
 const server = new McpServer({
@@ -10,6 +10,8 @@ const server = new McpServer({
 });
 
 registerTool(server, additionTool);
+
+registerTool(server, cartItemsRetrievalTool);
 
 // Start receiving messages on stdin and sending messages on stdout
 const transport = new StdioServerTransport();
