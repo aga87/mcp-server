@@ -45,10 +45,12 @@ server.registerResource(
 // Start receiving messages on stdin and sending messages on stdout
 const transport = new StdioServerTransport();
 
-try {
-  await server.connect(transport);
-  console.error("[mcp] server started (stdio)"); // <-- visible in Claude log
-} catch (err) {
-  console.error("[mcp] failed to start", err);
-  process.exit(1);
-}
+(async () => {
+  try {
+    await server.connect(transport);
+    console.log("[mcp] server started (stdio)");
+  } catch (err) {
+    console.error("[mcp] failed to start", err);
+    process.exit(1);
+  }
+})();
