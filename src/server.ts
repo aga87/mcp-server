@@ -3,6 +3,7 @@ import {
   ResourceTemplate,
 } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { registerTool } from "./lib";
 import { additionTool } from "./tools";
 
 // Create an MCP server
@@ -11,15 +12,7 @@ const server = new McpServer({
   version: "1.0.0",
 });
 
-server.registerTool(
-  additionTool.name,
-  {
-    title: "Addition Tool",
-    description: "Add two numbers",
-    inputSchema: additionTool.schema,
-  },
-  additionTool.handler
-);
+registerTool(server, additionTool);
 
 // Add a dynamic greeting resource
 server.registerResource(
