@@ -1,9 +1,8 @@
 // import { Timestamp } from "firebase-admin/firestore";
 
-export type CartDB = {
+type CartBase = {
   status: "active" | "converted" | "abandoned";
-  userId: string | null; // null for guest carts
-  anonymousId: string | null; // session id for guests
+
   // createdAt: Timestamp;
   // updatedAt: Timestamp | null;
   // expiresAt: Timestamp | null; // for cleanup/abandoned logic
@@ -21,3 +20,13 @@ export type CartDB = {
 
   // coupon: { code: string; discountId?: string } | null;
 };
+
+export type CartDB =
+  | (CartBase & {
+      userId: string;
+      anonymousId: null;
+    })
+  | (CartBase & {
+      userId: null;
+      anonymousId: string;
+    });

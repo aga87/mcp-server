@@ -6,6 +6,7 @@ import * as serviceAccount from "../mcp-server-ecommerce-firebase-adminsdk-servi
 import { registerTool } from "./lib";
 import {
   additionTool,
+  addProductToCartTool,
   getBooksTool,
   getBookVariantsTool,
   getCartCountTool,
@@ -31,6 +32,8 @@ registerTool(server, getBooksTool);
 registerTool(server, getBookVariantsTool);
 
 // CART MANAGEMENT TOOLS
+
+registerTool(server, addProductToCartTool);
 
 registerTool(server, getCartItemsTool);
 

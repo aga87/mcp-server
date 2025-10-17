@@ -4,6 +4,6 @@ export type CartItemDB = {
   productId: string;
   cartId: string;
   quantity: number;
-  createdAt: Timestamp;
-  updatedAt: Timestamp | null;
+  // createdAt: Timestamp;
+  // updatedAt: Timestamp | null;
 };

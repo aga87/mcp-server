@@ -3,6 +3,7 @@ import {
   type AuthorDB,
   type BookDB,
   type BookVariantDB,
+  type CartDB,
   type CartItemDB,
 } from "../types";
 
@@ -20,6 +21,7 @@ export const getDBConnection = (): IFirebaseSchema => ({
   authors: dataPoint<AuthorDB>("authors"),
   books: dataPoint<BookDB>("books"),
   bookVariants: dataPoint<BookVariantDB>("bookVariants"),
+  carts: dataPoint<CartDB>("carts"),
   cartItems: dataPoint<CartItemDB>("cartItems"),
 });
 
@@ -31,5 +33,6 @@ export interface IFirebaseSchema {
     BookVariantDB,
     DocumentData
   >;
+  carts: FirebaseFirestore.CollectionReference<CartDB, DocumentData>;
   cartItems: FirebaseFirestore.CollectionReference<CartItemDB, DocumentData>;
 }
