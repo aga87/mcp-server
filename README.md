@@ -18,7 +18,7 @@
 2. Locate the config file
 
 
-From Claud App -> Developer -> Edit config 
+From Claud App -> Settings > Developer -> Edit config 
 
 The path is probably:
 
@@ -34,6 +34,16 @@ code "$HOME/Library/Application Support/Claude/claude_desktop_config.json"
 ❯ pwd
 ```
 
+Ensure Claude will run the correct version of Node:
+
+```shell
+which node
+# should output smt like
+> /Users/mistergreen/.nvm/versions/node/v22.17.0/bin/node
+```
+
+Use this path as `command` in the server config below (instead of using simply `node`)
+
  **Option A – Use the built JS file**
 
 If you run npm run build and want Claude to call the compiled JS:
@@ -42,7 +52,7 @@ If you run npm run build and want Claude to call the compiled JS:
 {
   "mcpServers": {
     "demo-server": {
-      "command": "node",
+      "command": "/Users/mistergreen/.nvm/versions/node/v22.17.0/bin/node",
       "args": ["<ABSOLUTE-PATH>/dist/server.js"],
       "env": {
         "LOG_LEVEL": "info"
@@ -61,7 +71,7 @@ If you don’t want to build every time, Claude can launch your server through t
 {
   "mcpServers": {
     "demo-server": {
-      "command": "node",
+      "command": "/Users/mistergreen/.nvm/versions/node/v22.17.0/bin/node",
       "args": ["<ABSOLUTE-PATH>/node_modules/tsx/dist/cli.js", "<ABSOLUTE-PATH>/src/server.ts"],
       "env": {
         "LOG_LEVEL": "info"
@@ -83,6 +93,14 @@ If you don’t want to build every time, Claude can launch your server through t
 	- Use the add tool with a=2 and b=3
 	- Claud should discover the add tool. 
 
-4. Testing resources: In the chat, try  
-	- "Use the **greeting resource** from **demo-server** with name aga."
-	- This is currently not working. FIXME
+
+#### Debug
+
+From Claud App -> Settings > Developer -> Logs
+
+
+## Deployment options to consider 
+
+•	Need stable, unlimited connections and simplest ops? → GCE VM
+•	Team wants managed autoscaling & rollouts? → GKE Autopilot
+•	Want the simplest deploy UI and can tolerate hourly reconnects? → Cloud Run
