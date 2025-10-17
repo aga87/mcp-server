@@ -6,11 +6,13 @@
     "dev": "tsx src/server.ts",
     "build": "tsc -p .",
     "start": "node dist/server.js",
-    "typecheck": "tsc -p . --noEmit"
+    "typecheck": "tsc -p . --noEmit",
+    "seed:bookstore": "tsx src/scripts/seed-bookstore.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.17.5",
     "dotenv": "^17.2.2",
+    "firebase-admin": "^13.5.0",
     "pino": "^9.4.0",
     "zod": "^3.22.4"
   },

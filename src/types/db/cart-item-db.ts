@@ -1,6 +1,9 @@
+import { Timestamp } from "firebase-admin/firestore";
+
 export type CartItemDB = {
-  id: string;
-  name: string;
-  price: number;
+  productId: string;
+  cartId: string;
   quantity: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp | null;
 };
