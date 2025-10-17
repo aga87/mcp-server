@@ -4,7 +4,12 @@ import { initializeApp, ServiceAccount } from "firebase-admin/app";
 import { credential } from "firebase-admin";
 import * as serviceAccount from "../mcp-server-ecommerce-firebase-adminsdk-service-account.json";
 import { registerTool } from "./lib";
-import { additionTool, getCartCountTool, getCartItemsTool } from "./tools";
+import {
+  additionTool,
+  getBooksTool,
+  getCartCountTool,
+  getCartItemsTool,
+} from "./tools";
 
 initializeApp({
   credential: credential.cert(serviceAccount as ServiceAccount),
@@ -17,6 +22,10 @@ const server = new McpServer({
 });
 
 registerTool(server, additionTool);
+
+// BOOKSTORE EXPLORATION TOOLS
+
+registerTool(server, getBooksTool);
 
 // CART MANAGEMENT TOOLS
 
