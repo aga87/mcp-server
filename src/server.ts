@@ -7,6 +7,7 @@ import { registerTool } from "./lib";
 import {
   additionTool,
   getBooksTool,
+  getBookVariantsTool,
   getCartCountTool,
   getCartItemsTool,
 } from "./tools";
@@ -26,6 +27,8 @@ registerTool(server, additionTool);
 // BOOKSTORE EXPLORATION TOOLS
 
 registerTool(server, getBooksTool);
+
+registerTool(server, getBookVariantsTool);
 
 // CART MANAGEMENT TOOLS
 

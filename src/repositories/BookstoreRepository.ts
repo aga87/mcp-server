@@ -1,5 +1,5 @@
 import { type IFirebaseSchema } from "../startup/db";
-import { type AuthorDB, type BookDB } from "../types";
+import { type AuthorDB, type BookDB, type BookVariantDB } from "../types";
 
 // TODO: split into BookRepository and AuthorRepository, and encapsulate in a Bookstore Service?
 export class BookstoreRepository {
@@ -53,5 +53,18 @@ export class BookstoreRepository {
       ...book,
       author: authorMap.get(book.authorId),
     }));
+  }
+
+  public async getBookVariants(bookId?: string): Promise<BookVariantDB[]> {
+    let snapshot;
+    if (bookId) {
+      snapshot = await this.getDB()
+        .bookVariants.where("bookId", "==", bookId)
+        .get();
+    } else {
+      snapshot = await this.getDB().bookVariants.get();
+    }
+
+    return snapshot.docs.map((doc) => doc.data());
   }
 }
