@@ -14,7 +14,17 @@ if (!fs.existsSync(KEY_PATH)) {
   process.exit(1);
 }
 
-const serviceAccount = JSON.parse(fs.readFileSync(KEY_PATH, "utf8"));
+let serviceAccount;
+try {
+  serviceAccount = JSON.parse(fs.readFileSync(KEY_PATH, "utf8"));
+} catch (err) {
+  console.error(
+    `❌ Failed to parse service account JSON: ${
+      err instanceof Error ? err.message : String(err)
+    }`
+  );
+  process.exit(1);
+}
 
 // --- Init Admin SDK ---
 initializeApp({ credential: cert(serviceAccount) });
