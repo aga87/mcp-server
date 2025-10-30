@@ -1,3 +1,5 @@
-import { CartRepository } from "../repositories";
+import { getDBConnection } from "./db";
+import { BookstoreRepository, CartRepository } from "../repositories";
 
-export const cartRepository = new CartRepository();
+export const bookstoreRepository = new BookstoreRepository(getDBConnection);
+export const cartRepository = new CartRepository(getDBConnection);

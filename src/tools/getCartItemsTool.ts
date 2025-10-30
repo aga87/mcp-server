@@ -5,9 +5,9 @@ import { cartRepository } from "../startup/services";
 // No inputs needed
 const shape = {} as const;
 
-export const cartItemsRetrievalTool: ToolDef<typeof shape> = {
-  name: "cartItemsRetrieval",
-  title: "Cart Items Retrieval Tool",
+export const getCartItemsTool: ToolDef<typeof shape> = {
+  name: "getCartItemsTool",
+  title: "Get Cart Items Tool",
   description:
     "Returns the current items, quantities, and prices in the shopping cart",
   schema: shape,

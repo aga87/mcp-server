@@ -1,7 +1,21 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { initializeApp, ServiceAccount } from "firebase-admin/app";
+import { credential } from "firebase-admin";
+import * as serviceAccount from "../mcp-server-ecommerce-firebase-adminsdk-service-account.json";
 import { registerTool } from "./lib";
-import { additionTool, cartItemsRetrievalTool } from "./tools";
+import {
+  additionTool,
+  addProductToCartTool,
+  getBooksTool,
+  getBookVariantsTool,
+  getCartCountTool,
+  getCartItemsTool,
+} from "./tools";
+
+initializeApp({
+  credential: credential.cert(serviceAccount as ServiceAccount),
+});
 
 // Create an MCP server
 const server = new McpServer({
@@ -11,7 +25,19 @@ const server = new McpServer({
 
 registerTool(server, additionTool);
 
-registerTool(server, cartItemsRetrievalTool);
+// BOOKSTORE EXPLORATION TOOLS
+
+registerTool(server, getBooksTool);
+
+registerTool(server, getBookVariantsTool);
+
+// CART MANAGEMENT TOOLS
+
+registerTool(server, addProductToCartTool);
+
+registerTool(server, getCartItemsTool);
+
+registerTool(server, getCartCountTool);
 
 // Start receiving messages on stdin and sending messages on stdout
 const transport = new StdioServerTransport();
