@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "tsx src/server.ts",
     "build": "tsc -p .",
-    "start": "node dist/server.js",
     "typecheck": "tsc -p . --noEmit",
-    "seed:bookstore": "tsx src/scripts/seed-bookstore.ts"
+    "dev:server": "ts-node src/mcp-server/index.ts",
+    "start:server": "node dist/mcp-server/index.js",
+    "seed:bookstore": "tsx src/mcp-server/scripts/seed-bookstore.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.17.5",
