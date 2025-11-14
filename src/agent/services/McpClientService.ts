@@ -5,6 +5,17 @@ import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
 export class McpClientService {
   private client?: Client;
 
+  /**
+   * Discovers available tools at runtime. Returns an array of tool metadata objects, each containing:
+   * - name (e.g. "getBooksTool")
+   * - description
+   * - inputSchema (JSON Schema for args)
+   */
+  public async listTools() {
+    const client = await this.getClient();
+    return client.listTools();
+  }
+
   // Generic wrapper to call any MCP tool
   public async callTool<
     TArgs extends Record<string, unknown> = Record<string, unknown>
