@@ -1,13 +1,14 @@
 import "dotenv/config";
+import express, { Application, Request, Response } from "express";
+import { pingController } from "./controllers";
 
-import { bookstoreAgent } from "./startup/services";
+const app: Application = express();
 
-(async () => {
-  const customerQuery = "Can you recommend me a sci-fi book?";
+app.get("/ping", pingController);
 
-  console.log("Customer:", customerQuery);
+const { PORT } = process.env;
+const port = PORT || 5000;
 
-  const answer = await bookstoreAgent.handleCustomerQuery(customerQuery);
-
-  console.log("\nAgent:", answer);
-})();
+app.listen(port, () => {
+  console.log(`Listening on port ${port}...`);
+});
