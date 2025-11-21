@@ -3,24 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "tsx src/server.ts",
     "build": "tsc -p .",
     "typecheck": "tsc -p . --noEmit",
     "seed:bookstore": "tsx src/mcp-server/scripts/seed-bookstore.ts",
     "dev:server": "ts-node src/mcp-server/index.ts",
-    "dev:agent": "ts-node src/agent/index.ts",
-    "start:server": "node dist/mcp-server/index.js"
+    "dev:agent": "nodemon src/agent/index.ts",
+    "start:server": "node dist/mcp-server/index.js",
+    "start:agent": "node dist/agent/index.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.17.5",
     "dotenv": "^17.2.2",
+    "express": "^5.1.0",
     "firebase-admin": "^13.5.0",
     "openai": "^6.7.0",
     "pino": "^9.4.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/express": "^5.0.5",
     "@types/node": "^24.3.1",
+    "nodemon": "^3.1.11",
     "tsx": "^4.17.0",
     "typescript": "^5.6.2"
   }

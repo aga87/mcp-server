@@ -1,13 +1,23 @@
 import "dotenv/config";
+import express, { Application } from "express";
+import {
+  askController,
+  askStreamController,
+  pingController,
+} from "./controllers";
 
-import { bookstoreAgent } from "./startup/services";
+const app: Application = express();
 
-(async () => {
-  const customerQuery = "Can you recommend me a sci-fi book?";
+app.use(express.json()); // for parsing application/json
+app.get("/ping", pingController);
+app.post("/ask", askController); // E.g. "Can you recommend me a sci-fi book?"
+app.post("/ask-stream", askStreamController);
 
-  console.log("Customer:", customerQuery);
+const { PORT } = process.env;
+const port = PORT || 5000;
 
-  const answer = await bookstoreAgent.handleCustomerQuery(customerQuery);
+app.listen(port, () => {
+  console.log(`Listening on port ${port}...`);
+});
 
-  console.log("\nAgent:", answer);
-})();
+// TODO: add agent memory

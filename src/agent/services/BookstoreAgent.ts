@@ -21,38 +21,33 @@ export class BookstoreAgent {
 
     const toolResult = await this.executeTool(tool);
 
-    return await this.generateFinalAnswer(query, tool, toolResult);
-  }
+    // Generate final answer
 
-  private async generateFinalAnswer(
-    query: string,
-    tool: Tool,
-    toolResult: unknown
-  ): Promise<string> {
-    const systemPrompt = `
-You are a helpful assistant for an online bookstore.
-
-You will receive:
-- the customer's question,
-- information about which internal tool was used (if any),
-- and the tool result (if any).
-
-Use this information to answer the customer in a friendly, concise way.
-If the tool result is empty or does not contain what they want, be honest about it.
-`.trim();
-
-    const userPrompt = `
-Customer question:
-${query}
-
-Chosen tool and arguments:
-${JSON.stringify(tool, null, 2)}
-
-Tool result (may be null):
-${JSON.stringify(toolResult, null, 2)}
-`.trim();
+    const { systemPrompt, userPrompt } = this.buildFinalAnswerPrompts(
+      query,
+      tool,
+      toolResult
+    );
 
     return this.llm.ask(systemPrompt, userPrompt);
+  }
+
+  public async *handleCustomerQueryStream(
+    query: string
+  ): AsyncGenerator<string> {
+    const tool = await this.decideTool(query);
+
+    const toolResult = await this.executeTool(tool);
+
+    // Stream final answer
+
+    const { systemPrompt, userPrompt } = this.buildFinalAnswerPrompts(
+      query,
+      tool,
+      toolResult
+    );
+
+    yield* this.llm.askStream(systemPrompt, userPrompt);
   }
 
   private async executeTool(tool: Tool): Promise<unknown | null> {
@@ -102,6 +97,11 @@ Remember: respond with ONLY valid JSON (no extra text).
     return { tool: "none", args: {} };
   }
 
+  /**
+   *
+   * PROMPTS
+   */
+
   private async buildToolSystemPrompt(): Promise<string> {
     if (!this.toolsPromptCache) {
       const toolList = await this.mcpClient.listTools();
@@ -141,5 +141,36 @@ RULES:
     }
 
     return this.toolsPromptCache;
+  }
+
+  private buildFinalAnswerPrompts(
+    query: string,
+    tool: Tool,
+    toolResult: unknown
+  ): { systemPrompt: string; userPrompt: string } {
+    const systemPrompt = `
+You are a helpful assistant for an online bookstore.
+
+You will receive:
+- the customer's question,
+- information about which internal tool was used (if any),
+- and the tool result (if any).
+
+Use this information to answer the customer in a friendly, concise way.
+If the tool result is empty or does not contain what they want, be honest about it.
+`.trim();
+
+    const userPrompt = `
+Customer question:
+${query}
+
+Chosen tool and arguments:
+${JSON.stringify(tool, null, 2)}
+
+Tool result (may be null):
+${JSON.stringify(toolResult, null, 2)}
+`.trim();
+
+    return { systemPrompt, userPrompt };
   }
 }
