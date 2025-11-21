@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "tsx src/server.ts",
     "build": "tsc -p .",
     "typecheck": "tsc -p . --noEmit",
     "seed:bookstore": "tsx src/mcp-server/scripts/seed-bookstore.ts",
     "dev:server": "ts-node src/mcp-server/index.ts",
     "dev:agent": "nodemon src/agent/index.ts",
-    "start:server": "node dist/mcp-server/index.js"
+    "start:server": "node dist/mcp-server/index.js",
+    "start:agent": "node dist/agent/index.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.17.5",
