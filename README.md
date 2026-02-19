@@ -1,4 +1,3 @@
-
 # Simple MCP Server for an Online Bookstore with Custom AI Agent - POC
 
 
